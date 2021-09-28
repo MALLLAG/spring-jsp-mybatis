@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="messagemapper">
+	
+	<select id="selectMessageList" resultType="mdto" parameterType="String">
+	
+
+	SELECT M.MESSAGENO, M.SNO, M.RNO, M.MCONTENT
+	FROM MESSAGE M, XUSER U
+	WHERE M.RNO = U.USERNO AND M.RNO = #{rno}
+	ORDER BY M.MESSAGENO DESC
+	</select>
+	
+	<select id="selectMessageOne" resultType="mdto" parameterType="String">
+		
+	SELECT USERNO as rno
+	FROM XUSER
+	WHERE USERNO=#{rno}
+		
+	</select>
+	
+	<insert id="insertMessage" parameterType="mdto">
+
+	INSERT INTO MESSAGE 
+	VALUES(MESSAGENO_SEQ.NEXTVAL, #{sno}, #{rno}, #{mcontent},sysdate)
+
+  	</insert>
+  	
+  	<delete id="deleteMessageOne" parameterType="String">
+	DELETE FROM MESSAGE
+	WHERE MESSAGENO=#{messageno}
+
+
+</delete>
+
+<select id="messageRead" parameterType="String" resultType="mdto">
+	SELECT *
+	FROM MESSAGE
+	WHERE MESSAGENO = #{messageno}
+	
+</select> 
+
+  </mapper>

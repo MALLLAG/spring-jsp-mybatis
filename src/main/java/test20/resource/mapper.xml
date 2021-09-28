@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace=" ">
+
+
+
+<select id="selectBoardList" resultType="bdto"> <!-- 전체 뷰 -->
+	
+	SELECT B.BOARDNO, B.TITLE, B.CONTENT, B.NOWDATE, U.NAME AS USERNO
+	FROM BOARD B, XUSER U
+	WHERE B.USERNO = U.USERNO
+	ORDER BY BOARDNO DESC
+	
+</select> <!-- 선택 -->
+<select id="selectBoardOne" parameterType="String" resultType="bdto">
+	SELECT *
+	FROM BOARD
+	WHERE BOARDNO = #{boardno}
+	
+</select> 
+<!-- 추가 -->
+<insert id="insertBoard" parameterType="bdto">
+	INSERT INTO BOARD(BOARDNO,USERNO, TITLE, CONTENT, NOWDATE)
+	VALUES (board_seq.NEXTVAL,#{userno}, #{title}, #{content}, SYSDATE)
+</insert>
+<!-- 업데이트 -->
+<update id="updateBoard" parameterType="bdto">
+	UPDATE BOARD
+	SET TITLE = #{title},
+	CONTENT = #{content}
+	WHERE BOARDNO = #{boardno}
+	
+</update>
+<!-- 삭제 -->
+<delete id="deleteBoardOne" parameterType="String">
+	DELETE 
+	FROM BOARD
+	WHERE BOARDNO=#{boardno}
+</delete>
+
+
+<select id="selectSearchList" parameterType="String" resultType="bdto">
+	SELECT DISTINCT B.BOARDNO, B.USERNO, B.TITLE, B.CONTENT
+	FROM BOARD B, XUSER U
+	WHERE B.USERNO = U.USERNO AND U.NAME LIKE '%'||#{search}||'%' OR B.TITLE LIKE '%'||#{search}||'%' OR B.CONTENT LIKE '%'||#{search}||'%'
+</select>
+
+<select id="selectTitleList" parameterType="String" resultType="bdto">
+	SELECT BOARDNO, USERNO, TITLE, CONTENT
+	FROM BOARD
+	WHERE TITLE LIKE '%'||#{search}||'%'
+</select>
+
+<select id="selectWriterList" parameterType="String" resultType="bdto">
+	SELECT B.BOARDNO, B.USERNO, B.TITLE, B.CONTENT
+	FROM BOARD B, XUSER U
+	WHERE B.USERNO = U.USERNO AND U.NAME LIKE '%'||#{search}||'%'
+</select>
+
+<select id="selectContentList" parameterType="String" resultType="bdto">
+	SELECT BOARDNO, USERNO, TITLE, CONTENT
+	FROM BOARD
+	WHERE CONTENT LIKE '%'||#{search}||'%'
+</select>
+
+
+
+
+
+
+
+
+</mapper>

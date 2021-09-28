@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="usermapper">
+  	<insert id="saveForm" parameterType="udto">
+  		INSERT INTO XUSER (USERNO, NAME, EMAIL, PASSWORD, PHONNUMBER, ADDRESS, IMG)
+  		VALUES (XUSER_SEQ.NEXTVAL, #{name}, #{email}, #{password}, #{phonnumber}, #{address}, #{img})
+  	</insert>
+  	
+  	<select id="login" resultType="udto">
+  		SELECT USERNO, NAME, EMAIL, PHONNUMBER, PASSWORD, ROLETYPE, ADDRESS, IMG
+  		FROM XUSER
+  		WHERE EMAIL = #{email} AND PASSWORD = #{password}
+  	</select>
+  	
+  	<select id="userSelectOne" resultType="String">
+  		SELECT USERNO
+  		FROM XUSER
+  		WHERE EMAIL = #{email} AND PASSWORD = #{password}
+  	</select>
+  	
+  	<update id="updateForm" parameterType="udto">
+  		UPDATE XUSER
+  		SET NAME = #{name}, EMAIL = #{email}, PASSWORD = #{password}, PHONNUMBER = #{phonnumber}, ADDRESS = #{address}, IMG = #{img}
+  		WHERE USERNO = #{userno}
+  	</update>
+  	
+  	<select id="selectUserList" resultType="udto">
+
+	
+    SELECT USERNO, NAME, EMAIL, IMG
+    FROM XUSER
+    WHERE ROLETYPE = 'ADMIN'
+  	</select>
+  	
+  	<select id="selectAdminOne" resultType="udto" parameterType="String">
+
+	SELECT USERNO, NAME, EMAIL, ADDRESS, IMG
+	FROM XUSER
+	WHERE USERNO = #{userno}
+
+	</select>
+	
+	<select id="selectAdminAvg" resultType="String" parameterType="String">
+	
+	SELECT ROUND(AVG(RATING),2) AS avg
+	FROM RATING
+	WHERE ADMINNO = #{adminno}
+	
+	</select>
+
+     <select id="findId" parameterType="udto" resultType="String">
+        SELECT EMAIL
+        FROM XUSER
+        WHERE NAME = #{name} AND PHONNUMBER = #{phonnumber}
+    </select>
+  	
+  	<select id="check" resultType="int" parameterType="String">
+  	
+  	SELECT COUNT(*)
+  	FROM XUSER
+  	WHERE NAME = #{name}
+  	
+  	</select>
+  	
+  	  	<select id="emailcheck" resultType="int" parameterType="String">
+  	
+  	SELECT COUNT(*)
+  	FROM XUSER
+  	WHERE EMAIL = #{email}
+  	
+  	</select>
+  	
+  	
+  	<select id="findPassword" parameterType="udto" resultType="String">
+        SELECT PASSWORD
+        FROM XUSER
+        WHERE NAME = #{name} AND PHONNUMBER = #{phonnumber} AND EMAIL = #{email}
+    </select>
+  	
+  	<delete id="deleteUser" parameterType="udto" >
+  	DELETE
+  	FROM XUSER
+  	WHERE USERNO = #{userno}
+  	</delete>
+  	
+  </mapper>

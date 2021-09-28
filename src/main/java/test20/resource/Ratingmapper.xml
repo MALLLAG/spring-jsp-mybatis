@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ratingmapper">
+
+<insert id="insertRating" parameterType="adto">
+	INSERT INTO RATING(RATINGNO, USERNO, ADMINNO, RATING, RCONTENT)
+	VALUES (RATINGNO_SEQ.NEXTVAL, #{userno}, #{adminno}, #{rating}, #{rcontent})
+
+
+</insert>
+
+<select id="selectRatingList" resultType="adto" parameterType="adto">
+	
+	SELECT ratingno, userno,rating,rcontent
+	FROM rating
+	where adminno = #{adminno}
+	ORDER BY adminno
+</select>
+
+<delete id="deleteRatingOne" parameterType="String">
+	DELETE FROM RATING
+	WHERE RATINGNO=#{ratingno}
+
+</delete>
+
+
+
+<select id="selectCount" resultType="String" parameterType="adto">
+	
+	SELECT COUNT(*)AS COUNT
+	FROM RATING
+	WHERE ADMINNO=#{adminno} AND USERNO=#{userno}
+	
+</select>
+
+
+
+
+</mapper>

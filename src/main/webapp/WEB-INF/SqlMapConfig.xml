@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0// EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+ 	<typeAliases>
+ 		<typeAlias type="test20.dto.BoardDto" alias="bdto"/>
+ 		<typeAlias type="test20.dto.UserDTO" alias="udto" />
+ 		<typeAlias type="test20.dto.ReplyDto" alias="rdto" />
+ 		<typeAlias type="test20.dto.MessageDto" alias="mdto" />
+ 		<typeAlias type="test20.dto.RatingDto" alias="adto" />
+ 		<typeAlias type="test20.dto.Pagination" alias="pdto" />
+ 		<typeAlias type="test20.dto.ContactDto" alias="cdto" />
+ 	</typeAliases>
+
+ 
+ 	<mappers>
+ 		<mapper resource="test20/resource/Replymapper.xml"/>
+ 		<mapper resource="test20/resource/mapper.xml"/>
+ 		<mapper resource="test20/resource/Usermapper.xml"/>
+ 		<mapper resource="test20/resource/Messagemapper.xml"/>
+ 		<mapper resource="test20/resource/Ratingmapper.xml"/>
+ 		<mapper resource="test20/resource/Contactmapper.xml"/>
+ 	
+ 	</mappers> 
+ </configuration>
